@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코인브리핑 - AI가 요약한 오늘의 코인 뉴스</title>
+    <link rel="icon" type="image/svg+xml" href="asset/icon_coin.svg">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header class="header container">
+        <img class="logo" src="./assets/icon.svg" alt="코인브리핑 로고" />
+        <!-- <a href="#" class="btn btn-primary download-button">앱 다운로드</a> -->
+    </header>
+
+    <main>
+        <section class="hero container">
+            <!-- <h1>데이터 기반, AI 브리핑<br><span>코인 시황</span>을 한눈에.</h1> -->
+            <h1>코인 시장, 하루 한 장으로 끝!<br>데이터기반 AI 분석 <span>코인브리핑.</span></h1>
+            <!-- <a href="#" class="btn btn-primary btn-stores download-button">App Store / Google Play</a> -->
+            <div class="image-placeholder hero-image"></div>
+        </section>
+        
+        <section class="features container">
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>한장 브리핑</h3>
+                    <p>매일 아침, AI가 수많은 뉴스와 데이터를 분석하여 시장의 핵심만 한 장으로 요약해 드려요.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>심층 AI 분석</h3>
+                    <p>차트, 파생상품, 시장 심리까지. 데이터 너머의 인사이트를 담은 전문가 수준의 분석을 제공합니다.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>지속적인 브리핑</h3>
+                    <p>일관된 브리핑 시간으로 코인 시장의 흐름을 놓치지 않게 코인브리핑이 도와드립니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="final-cta container">
+            <h2>지금 바로 다운로드하고, 가장 빠른 정보를 경험하세요!</h2>
+            <p>앱스토어와 구글플레이에서 만나보세요.</p>
+            <a href="#" class="btn btn-primary download-button">다운로드</a>
+        </section> -->
+    </main>
+
+    <footer class="footer container">
+        <div class="footer-text">
+            Copyright ⓒ 코인브리핑. All right reserved.
+        </div>
+        <div class="footer-links">
+            <a href="mailto:dnomad.space@gmail.com">문의하기</a>
+            <a href="https://dnomad-space.github.io/coinbriefing/privacy/" target="_blank">개인정보처리방침</a>
+        </div>
+    </footer>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <h2>🚀 출시 준비 중</h2>
+            <p>현재 앱 출시를 위해 마지막 단계를 진행 중입니다.<br>조금만 기다려주시면 곧 만나보실 수 있어요!</p>
+            <button id="modal-close-btn" class="btn btn-primary">확인</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadButtons = document.querySelectorAll('.download-button');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            const openModal = () => {
+                modalOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    modalOverlay.classList.add('show');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                modalOverlay.classList.remove('show');
+                setTimeout(() => {
+                    modalOverlay.style.display = 'none';
+                }, 300); 
+            };
+
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    openModal();
+                });
+            });
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
