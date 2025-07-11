@@ -7,6 +7,15 @@
     <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="stylesheet" href="./style.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WDXDZ6TBZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9WDXDZ6TBZ');
+    </script>
 </head>
 <body>
     <header class="header container">
@@ -16,9 +25,7 @@
 
     <main>
         <section class="hero container">
-            <!-- <h1>데이터 기반, AI 브리핑<br><span>코인 시황</span>을 한눈에.</h1> -->
             <h1>코인 시장, 하루 한 장으로 끝!<br>데이터기반 AI 분석 <span>코인브리핑.</span></h1>
-            <!-- <a href="#" class="btn btn-primary btn-stores download-button">App Store / Google Play</a> -->
             <div class="image-placeholder hero-image"></div>
         </section>
         
@@ -38,12 +45,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- <section class="final-cta container">
-            <h2>지금 바로 다운로드하고, 가장 빠른 정보를 경험하세요!</h2>
-            <p>앱스토어와 구글플레이에서 만나보세요.</p>
-            <a href="#" class="btn btn-primary download-button">다운로드</a>
-        </section> -->
     </main>
 
     <footer class="footer container">
@@ -51,8 +52,8 @@
             Copyright ⓒ 코인브리핑. All right reserved.
         </div>
         <div class="footer-links">
-            <a href="mailto:dnomad.space@gmail.com">문의하기</a>
-            <a href="https://dnomad-space.github.io/coinbriefing/privacy/" target="_blank">개인정보처리방침</a>
+            <a href="mailto:dnomad.space@gmail.com" id="contact-link">문의하기</a>
+            <a href="https://dnomad-space.github.io/coinbriefing/privacy/" target="_blank" id="privacy-policy-link">개인정보처리방침</a>
         </div>
     </footer>
 
@@ -69,6 +70,8 @@
             const downloadButtons = document.querySelectorAll('.download-button');
             const modalOverlay = document.getElementById('modal-overlay');
             const modalCloseBtn = document.getElementById('modal-close-btn');
+            const contactLink = document.getElementById('contact-link');
+            const privacyPolicyLink = document.getElementById('privacy-policy-link');
 
             const openModal = () => {
                 modalOverlay.style.display = 'flex';
@@ -87,16 +90,33 @@
             downloadButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault(); 
+                    gtag('event', 'click_download_cta');
                     openModal();
                 });
             });
 
-            modalCloseBtn.addEventListener('click', closeModal);
+            modalCloseBtn.addEventListener('click', () => {
+                gtag('event', 'close_launch_modal');
+                closeModal();
+            });
+
             modalOverlay.addEventListener('click', (e) => {
                 if (e.target === modalOverlay) {
                     closeModal();
                 }
             });
+
+            if (contactLink) {
+                contactLink.addEventListener('click', () => {
+                    gtag('event', 'click_contact');
+                });
+            }
+
+            if (privacyPolicyLink) {
+                privacyPolicyLink.addEventListener('click', () => {
+                    gtag('event', 'click_privacy_policy');
+                });
+            }
         });
     </script>
 </body>
