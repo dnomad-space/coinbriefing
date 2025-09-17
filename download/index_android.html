@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>코인브리핑 - AI가 요약한 오늘의 코인 뉴스</title>
+        <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+        <style>
+            /* 메시지가 잘 보이도록 간단한 스타일 추가 */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-family: sans-serif;
+                text-align: center;
+            }
+        </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WDXDZ6TBZ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9WDXDZ6TBZ');
+        </script>
+    
+        <script type="text/javascript">
+            function redirectByOS() {
+                const IOS_STORE_URL = "https://apps.apple.com/app/6748297262"; 
+                const FALLBACK_URL = "https://dnomad-space.github.io/coinbriefing"; 
+                const messageElement = document.getElementById('message'); // 메시지를 표시할 요소를 가져옴
+
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    gtag('event', 'store_link_click', { 'os_type': 'iOS' });
+                    messageElement.innerText = "iOS 앱스토어로 이동합니다...";
+                    window.location.href = IOS_STORE_URL;
+                    return;
+                }
+                
+                // ----- 이 부분이 수정되었습니다 -----
+                if (/android/i.test(userAgent)) {
+                    gtag('event', 'android_coming_soon_redirect', { 'os_type': 'Android' });
+
+                    // 1. 페이지에 안내 메시지 표시
+                    messageElement.innerText = "안드로이드 버전은 8월 출시 예정입니다.\n잠시 후 홈페이지로 이동합니다.";
+
+                    // 2. 3초 후에 홈페이지로 리디렉션
+                    setTimeout(function() {
+                        window.location.href = FALLBACK_URL;
+                    }, 3000); // 3000ms = 3초
+                    return;
+                }
+                
+                // 데스크탑 또는 기타 OS
+                gtag('event', 'fallback_link_click', { 'os_type': 'Desktop' });
+                messageElement.innerText = "홈페이지로 이동합니다...";
+                window.location.href = FALLBACK_URL;
+            }
+
+            // DOM이 로드된 후 함수를 실행해야 messageElement를 찾을 수 있습니다.
+            window.onload = redirectByOS;
+        </script>
+    </head>
+    <body>
+        <!-- 메시지를 표시할 p 태그에 id를 부여합니다. -->
+        <p id="message">페이지를 이동 중입니다...</p>
+    </body>
+</html>
