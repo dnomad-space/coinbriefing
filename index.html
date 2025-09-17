@@ -20,7 +20,7 @@
 <body>
     <header class="header container">
         <img class="logo" src="./assets/icon.svg" alt="코인브리핑 로고" />
-        <!-- <a href="#" class="btn btn-primary download-button">앱 다운로드</a> -->
+        <a href="#" class="btn btn-primary download-button">앱 다운로드</a>
     </header>
 
     <main>
@@ -57,55 +57,55 @@
         </div>
     </footer>
 
-    <div id="modal-overlay" class="modal-overlay">
-        <div id="modal-content" class="modal-content">
-            <h2>🚀 출시 준비 중</h2>
-            <p>현재 앱 출시를 위해 마지막 단계를 진행 중입니다.<br>조금만 기다려주시면 곧 만나보실 수 있어요!</p>
-            <button id="modal-close-btn" class="btn btn-primary">확인</button>
-        </div>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const downloadButtons = document.querySelectorAll('.download-button');
-            const modalOverlay = document.getElementById('modal-overlay');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
             const contactLink = document.getElementById('contact-link');
             const privacyPolicyLink = document.getElementById('privacy-policy-link');
 
-            const openModal = () => {
-                modalOverlay.style.display = 'flex';
-                setTimeout(() => {
-                    modalOverlay.classList.add('show');
-                }, 10);
+            // OS에 따라 적절한 앱 스토어 링크로 리디렉션하는 함수
+            const redirectToStore = () => {
+                const IOS_STORE_URL = "https://apps.apple.com/app/6748297262"; 
+                const ANDROID_STORE_URL = "https://play.google.com/store/apps/details?id=com.nomad.coinbriefing"; 
+                // 데스크탑 등 모바일이 아닐 경우 이동할 기본 URL
+                const FALLBACK_URL = "https://dnomad-space.github.io/coinbriefing"; 
+
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                // iOS (아이폰, 아이패드) 감지
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    gtag('event', 'store_link_click', { 'os_type': 'iOS' });
+                    window.location.href = IOS_STORE_URL;
+                    return;
+                }
+                
+                // 안드로이드 감지
+                if (/android/i.test(userAgent)) {
+                    gtag('event', 'store_link_click', { 'os_type': 'Android' });
+                    window.location.href = ANDROID_STORE_URL;
+                    return;
+                }
+                
+                // 그 외 (데스크탑 등)
+                gtag('event', 'store_link_click', { 'os_type': 'Desktop' });
+                // 데스크탑에서는 앱 설치가 불가능하므로, 사용자에게 안내 메시지를 보여주는 것도 좋은 방법입니다.
+                // 예: alert("모바일 기기에서 접속해주세요.");
+                // 여기서는 제공해주신 로직대로 fallback URL로 이동시킵니다.
+                window.location.href = FALLBACK_URL;
             };
 
-            const closeModal = () => {
-                modalOverlay.classList.remove('show');
-                setTimeout(() => {
-                    modalOverlay.style.display = 'none';
-                }, 300); 
-            };
-
+            // 모든 '앱 다운로드' 버튼에 클릭 이벤트 리스너 추가
             downloadButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault(); 
-                    gtag('event', 'click_download_cta');
-                    openModal();
+                    gtag('event', 'click_download_cta'); // 다운로드 버튼 클릭 이벤트 추적
+                    redirectToStore(); // OS별 스토어 이동 함수 호출
                 });
             });
 
-            modalCloseBtn.addEventListener('click', () => {
-                gtag('event', 'close_launch_modal');
-                closeModal();
-            });
+            // 모달 관련 스크립트는 모두 제거했습니다.
 
-            modalOverlay.addEventListener('click', (e) => {
-                if (e.target === modalOverlay) {
-                    closeModal();
-                }
-            });
-
+            // 기존에 있던 푸터 링크 추적 스크립트는 그대로 유지합니다.
             if (contactLink) {
                 contactLink.addEventListener('click', () => {
                     gtag('event', 'click_contact');
